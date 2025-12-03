@@ -1,0 +1,11 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"script",
+	"author":	"deanm",
+	"description":	{
+		"":	"Select all lines connected to a line"
+	},
+	"version":	"",
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}
