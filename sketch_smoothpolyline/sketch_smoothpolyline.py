@@ -44,7 +44,6 @@ def run(_context: str):
             points.add(points[0])
             points.add(points[1])
             points.add(points[2])
-            points.add(points[3])
         else:
             app.log("Doing non-loop")
             points = adsk.core.ObjectCollection.create()
