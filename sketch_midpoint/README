@@ -1,0 +1,2 @@
+Creates a point at the midpoint of a sketch line. Operates on the current
+selection and supports multiple lines (creating a midpoint per line).
