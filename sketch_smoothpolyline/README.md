@@ -8,3 +8,5 @@ Operates on the current selection, and after leaves all of the lines selected
 so you can easily delete them. Unfortunately it does not really seem possible
 to control the undo stack from Fusion scripts, so you cannot undo the entire
 operation in one step, undo will undo each spline creation individually.
+
+![demo](sketch_smoothpolyline_demo.gif)
