@@ -1,0 +1,11 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"script",
+	"author":	"deanm",
+	"description":	{
+		"":	"deanm"
+	},
+	"version":	"",
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}

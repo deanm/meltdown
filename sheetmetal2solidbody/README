@@ -1,0 +1,7 @@
+This uses a known workaround/hack to convert a sheet metal body
+to a normal solid body. See BRepBody.isSheetMetal. The approach
+is to use a boundary fill on the sheet metal bodies, you can do
+this from the UI but then you must visually check all of the
+check boxes on the objects in the design, which is difficult
+and error prone for large amounts of cells. This just does
+the operations and selects all cells, creating all solids.
