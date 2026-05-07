@@ -12,8 +12,6 @@ def run(_context: str):
         if sel.count is not 1:
             raise Exception("Non single selection")
 
-        start = None
-
         x = sel.item(0).entity
         if x.objectType != "adsk::fusion::SketchLine":
             raise Exception("Selection is non-SketchLine")
@@ -21,24 +19,39 @@ def run(_context: str):
         points = adsk.core.ObjectCollection.create()
         lines = adsk.core.ObjectCollection.create()
         loop = False
+
+        start = None
+        cur = None
+
         while True:
+            # NOTE: Our lines could be in any orientation, so we shouldn't
+            # rely on a consistent start / end ordering.
             lines.add(x)
-            points.add(x.startSketchPoint)
+            if cur is None:
+                cur = x.startSketchPoint
+            nxt = x.endSketchPoint
+            if nxt == cur:
+                nxt = x.startSketchPoint
+
             if start is None:
-                start = x.startSketchPoint
-            if x.endSketchPoint == start:
+                start = cur
+            elif cur == start:
                 loop = True
                 app.log("found loop " + str(points.count))
                 break
-            if x.endSketchPoint.connectedEntities.count == 1:
+
+            points.add(cur)
+
+            if nxt.connectedEntities.count == 1:
                 loop = False
                 break
-            if x.endSketchPoint.connectedEntities.count != 2:
+            if nxt.connectedEntities.count != 2:
                 raise Exception("Too many connections")
-            if x.endSketchPoint.connectedEntities.item(0) != x:
-                x = x.endSketchPoint.connectedEntities.item(0)
+            if nxt.connectedEntities.item(0) != x:
+                x = nxt.connectedEntities.item(0)
             else:
-                x = x.endSketchPoint.connectedEntities.item(1)
+                x = nxt.connectedEntities.item(1)
+            cur = nxt
 
         if loop:
             points.add(points[0])
@@ -92,7 +105,7 @@ def run(_context: str):
             c1z = (p3.z / -6) + p2.z + p1.z / 6;
 
             sketch.sketchCurves.sketchControlPointSplines.add([
-                points[i+1], 
+                points[i+1],
                 adsk.core.Point3D.create(c0x, c0y, c0z),
                 adsk.core.Point3D.create(c1x, c1y, c1z),
                 points[i+2]], 3)
